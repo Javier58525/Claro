@@ -30,12 +30,12 @@ export function DetallesPeliculas() {
         console.log(datos);
 
         const { group: { common: { image_background, image_medium, title, large_description, extendedcommon: { media: { publishyear, duration } },
-            extendedcommon: { media: { rating: { desc, code } } },extendedcommon: { media: { language: { dubbed, subbed } } },extendedcommon: { genres: { genre } }, extendedcommon: { roles: { role } } } } } = datos.response;
+            extendedcommon: { media: { rating: { desc, code } } }, extendedcommon: { media: { language: { dubbed, subbed } } }, extendedcommon: { genres: { genre } }, extendedcommon: { roles: { role } } } } } = datos.response;
 
 
         console.log(datos.response.group.common.large_description);
 
-        setInfoPeliculas({ image_background, image_medium, title, large_description, publishyear, duration, desc, code, role,genre,dubbed,subbed });
+        setInfoPeliculas({ image_background, image_medium, title, large_description, publishyear, duration, desc, code, role, genre, dubbed, subbed });
         console.log(datos);
 
 
@@ -61,11 +61,20 @@ export function DetallesPeliculas() {
                 </p>
                 <p>
                     {infoPeliculas.publishyear}&nbsp;&nbsp;{infoPeliculas.duration}
-                    <strong className={styles.blanco}>{infoPeliculas.code}</strong> <br></br>
+                    <strong className={styles.blanco}>{infoPeliculas.code}</strong>
+                    <strong className={styles.blanco}>
+                        {"subbed" in infoPeliculas && infoPeliculas.subbed? 
+                        "Subtitulada"
+                        : ""}
+                    </strong>
+                    <strong className={styles.blanco}>
+                        {"dubbed" in infoPeliculas && infoPeliculas.dubbed? 
+                        "Doblada"
+                        : ""}
+                    </strong>
 
                 </p>
                 <p>
-                    <strong>Rating: </strong>{infoPeliculas.desc}  <br></br> <br></br>
                     <strong >Descripción:</strong> {infoPeliculas.large_description} <br></br>
                     <strong>{"role" in infoPeliculas &&
                         infoPeliculas.role.map((actores) => (
@@ -78,10 +87,10 @@ export function DetallesPeliculas() {
                         ))}
                     </strong>
 
-                    <strong>Genero: {"genre" in infoPeliculas &&
-										infoPeliculas.genre.map((genero) => (
-											<strong key={genero.id}>{genero.desc}, </strong>
-										))}</strong><br></br>
+                    <strong>Género: {"genre" in infoPeliculas &&
+                        infoPeliculas.genre.map((genero) => (
+                            <strong key={genero.id}>{genero.desc} </strong>
+                        ))}</strong><br></br>
 
 
 
