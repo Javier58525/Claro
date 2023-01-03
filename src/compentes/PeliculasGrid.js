@@ -14,7 +14,7 @@ export function PeliculasGrid(id) {
   useEffect(() => {
     cargarPeliculas(id);
 
-  }, []);
+  }, [id.id]);
 
 
 
