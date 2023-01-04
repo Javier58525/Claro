@@ -58,9 +58,11 @@
 
 .searchButton {
   position: absolute;
-  right: .1px;
+  left: -60px;
   top: 0;
   height: 100%;
+  background-color: black;
+  color: white;
 }
 
 .searchInput {
@@ -69,6 +71,8 @@
   border-radius: 10px;
   padding: 5px 30px 5px 10px;
   border: 1px solid white;
+  background-color: black;
+  color: white;
 }
 
 .searchInput:focus,
@@ -85,9 +89,10 @@
 }
 
 .blanco {
-  color: black; 
-  background: white ;
-  padding: 0.3rem; 
-  border-radius: 15px ;
+  color: black;
+  background: white;
+  padding: 0.3rem;
+  border-radius: 15px;
   margin: 0 0.5rem;
 }
+

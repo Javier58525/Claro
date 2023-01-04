@@ -66,6 +66,7 @@ export function DetallesPeliculas() {
                         {"subbed" in infoPeliculas && infoPeliculas.subbed? 
                         "Subtitulada"
                         : ""}
+                        {console.log("Doblada"+ infoPeliculas.dubbed)}
                     </strong>
                     <strong className={styles.blanco}>
                         {"dubbed" in infoPeliculas && infoPeliculas.dubbed? 
@@ -96,6 +97,17 @@ export function DetallesPeliculas() {
 
 
                 </p>
+                <div className="About me">
+				<a href="www.fb.com" title="Facebook">
+                <img src="https://www.google.com/search?q=fb+icon&source=lnms&tbm=isch&sa=X&ved=2ahUKEwirz-it1K78AhV8M0QIHcfIBFcQ_AUoAXoECAEQAw&biw=1536&bih=758&dpr=1.25#imgrc=0UwYLl9YdLXjjM" alt="facebook" />
+                <i>Facebook</i>
+				</a>
+				<a href="www.fb.com" title="Facebook">
+                <img  alt="facebook" />
+                <i >Facebook2</i>
+
+				</a>
+			    </div>
             </div>
         </div>
     );
