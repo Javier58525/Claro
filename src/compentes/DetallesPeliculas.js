@@ -47,6 +47,11 @@ export function DetallesPeliculas() {
         backgroundPosition: "center",
     }
 
+    console.log("subbed", infoPeliculas.subbed);
+    console.log("dubbed", infoPeliculas.dubbed);
+
+    const isSubbed = "subbed" in infoPeliculas && (infoPeliculas.subbed === "true" || infoPeliculas.subbed === true) ? true : false;
+    const isDubbed = "dubbed" in infoPeliculas && (infoPeliculas.dubbed === "true" || infoPeliculas.dubbed === true) ? true : false;
 
     return (
         <div className={styles.detailsContainer} style={background}>
@@ -62,18 +67,14 @@ export function DetallesPeliculas() {
                 <p>
                     {infoPeliculas.publishyear}&nbsp;&nbsp;{infoPeliculas.duration}
                     <strong className={styles.blanco}>{infoPeliculas.code}</strong>
-                    <strong className={styles.blanco}>
-                        {"subbed" in infoPeliculas && infoPeliculas.subbed? 
-                        "Subtitulada"
-                        : ""}
-                        {console.log("Doblada"+ infoPeliculas.dubbed)}
-                    </strong>
-                    <strong className={styles.blanco}>
-                        {"dubbed" in infoPeliculas && infoPeliculas.dubbed? 
-                        "Doblada"
-                        : ""}
-                    </strong>
-
+                    {
+                        isSubbed && 
+                            <strong className={styles.blanco}>Subtitulada</strong>
+                    }
+                    {
+                        isDubbed && 
+                            <strong className={styles.blanco}>Doblada</strong>
+                    }
                 </p>
                 <p>
                     <strong >Descripción:</strong> {infoPeliculas.large_description} <br></br>
