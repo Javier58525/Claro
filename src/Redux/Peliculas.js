@@ -9,6 +9,7 @@ const inialState = {
 
 const GET_TITLE_LIST_SUCCESS = "GET_TITLE_LIST_SUCCESS";
 const GET_TITLE_LIST_FAILURE = "GET_TITLE_LIST_FAILURE";
+const DEFAULT_GENRE = 34270
 
 export default function peliculasReducer(state = inialState, action) {
 	switch (action.type) {
@@ -29,9 +30,9 @@ export default function peliculasReducer(state = inialState, action) {
 	}
 }
 
-export const getTitleListAction = () => async (dispatch, getState) => {
+export const getTitleListAction = (genre = DEFAULT_GENRE) => async (dispatch, getState) => {
 	try {
-		const url = "https://mfwkweb-api.clarovideo.net/services/content/list?device_id=web&device_category=web&device_model=web&device_type=web&device_so=Chrome&format=json&device_manufacturer=generic&authpn=webclient&authpt=tfg1h3j4k6fd7&api_version=v5.93&region=mexico&HKS=rrscut2td9j0v73m68jrf3k665&quantity=50&from=0&level_id=GPS&order_way=ASC&order_id=50&filter_id=34270";
+		const url = "https://mfwkweb-api.clarovideo.net/services/content/list?device_id=web&device_category=web&device_model=web&device_type=web&device_so=Chrome&format=json&device_manufacturer=generic&authpn=webclient&authpt=tfg1h3j4k6fd7&api_version=v5.93&region=mexico&HKS=rrscut2td9j0v73m68jrf3k665&quantity=50&from=0&level_id=GPS&order_way=ASC&order_id=50&filter_id="+genre;
 
 		const datos= await fetch(url);
 		const res = await datos.json();
