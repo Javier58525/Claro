@@ -1,33 +1,44 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import styles from "./PeliculaCard.module.css";
+import { useDispatch, useSelector } from 'react-redux';
+import {getTitleDetailAction} from '../Redux/DetallesPeliculasRedux';
+
 
 export function DetallesPeliculas() {
     const id = useParams();
-    const [infoPeliculas, setInfoPeliculas] = useState({});
+    //const [infoPeliculas, setInfoPeliculas] = useState({});
+    const dispatch = useDispatch();
+    const detalles = useSelector( (store)=>store.titleDetail.detail);
+
+
+    console.log("Detalles Peliculas Redux", detalles);
+
 
     console.log(id.Id);
 
     console.log(styles);
 
     useEffect(() => {
-        cargarPeliculas();
+        //cargarPeliculas();
+        dispatch(getTitleDetailAction(id.Id));
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [dispatch]);
 
 
 
-    const cargarPeliculas = async () => {
+    /* const cargarPeliculas = async () => {
         console.log(id);
 
 
 
-        const url = `https://mfwkweb-api.clarovideo.net/services/content/data?device_id=web&device_category=web&device_model=web&device_type=web&device_so=Chrome&format=json&device_manufacturer=generic&authpn=webclient&authpt=tfg1h3j4k6fd7&api_version=v5.93&region=mexico&HKS=rrscut2td9j0v73m68jrf3k665&group_id=` + id.Id;
+            const url = `https://mfwkweb-api.clarovideo.net/services/content/data?device_id=web&device_category=web&device_model=web&device_type=web&device_so=Chrome&format=json&device_manufacturer=generic&authpn=webclient&authpt=tfg1h3j4k6fd7&api_version=v5.93&region=mexico&HKS=rrscut2td9j0v73m68jrf3k665&group_id=` + id.Id;
 
-        const respuesta = await fetch(url);
+            const respuesta = await fetch(url);
 
-        const datos = await respuesta.json();
-        console.log(datos);
+            const datos = await respuesta.json();
+            console.log(datos);
 
         const { group: { common: { image_background, image_medium, title, large_description, extendedcommon: { media: { publishyear, duration } },
             extendedcommon: { media: { rating: { desc, code } } }, extendedcommon: { media: { language: { dubbed, subbed } } }, extendedcommon: { genres: { genre } }, extendedcommon: { roles: { role } } } } } = datos.response;
@@ -39,34 +50,34 @@ export function DetallesPeliculas() {
         console.log(datos);
 
 
-    }
+    } */
 
     const background = {
-        backgroundImage: `url(${infoPeliculas.image_background})`,
+        backgroundImage: `url(${detalles.image_background})`,
         backgroundSize: "cover",
         backgroundPosition: "center",
     }
 
-    console.log("subbed", infoPeliculas.subbed);
-    console.log("dubbed", infoPeliculas.dubbed);
+    console.log("subbed", detalles.subbed);
+    console.log("dubbed", detalles.dubbed);
 
-    const isSubbed = "subbed" in infoPeliculas && (infoPeliculas.subbed === "true" || infoPeliculas.subbed === true) ? true : false;
-    const isDubbed = "dubbed" in infoPeliculas && (infoPeliculas.dubbed === "true" || infoPeliculas.dubbed === true) ? true : false;
+    const isSubbed = "subbed" in detalles && (detalles.subbed === "true" || detalles.subbed === true) ? true : false;
+    const isDubbed = "dubbed" in detalles && (detalles.dubbed === "true" || detalles.dubbed === true) ? true : false;
 
     return (
         <div className={styles.detailsContainer} style={background}>
             <img
                 className={`${styles.col} ${styles.movieImage}`}
-                src={infoPeliculas.image_medium}
+                src={detalles.image_medium}
                 alt="tui"
             />
             <div className={`${styles.col} ${styles.movieDetails}`}>
                 <p className={styles.firstItem}>
-                    <strong>Title:</strong> {infoPeliculas.title}
+                    <strong>Title:</strong> {detalles.title}
                 </p>
                 <p>
-                    {infoPeliculas.publishyear}&nbsp;&nbsp;{infoPeliculas.duration}
-                    <strong className={styles.blanco}>{infoPeliculas.code}</strong>
+                    año{detalles.extendedcommon.media.publishyear}&nbsp;&nbsp;{detalles.duration}
+                    <strong className={styles.blanco}>{detalles.code}</strong>
                     {
                         isSubbed && 
                             <strong className={styles.blanco}>Subtitulada</strong>
@@ -77,21 +88,21 @@ export function DetallesPeliculas() {
                     }
                 </p>
                 <p>
-                    <strong >Descripción:</strong> {infoPeliculas.large_description} <br></br>
-                    <strong>{"role" in infoPeliculas &&
-                        infoPeliculas.role.map((actores) => (
+                    <strong >Descripción:</strong> {detalles.large_description} <br></br>
+                    <strong>{"role" in detalles &&
+                        detalles.role.map((actores) => (
                             <p key={actores.id}>
 
                                 {actores.desc}: {actores.talents.talent.map((Actor) => (
-                                    <strong key={Actor.id}>{Actor.fullname}</strong>
+                                    <i key={Actor.id}>{Actor.fullname}</i>
                                 ))}
                             </p>
                         ))}
                     </strong>
 
-                    <strong>Género: {"genre" in infoPeliculas &&
-                        infoPeliculas.genre.map((genero) => (
-                            <strong key={genero.id}>{genero.desc} </strong>
+                    <strong>Género: {"genre" in detalles &&
+                        detalles.genre.map((genero) => (
+                            <i key={genero.id}>{genero.desc} </i>
                         ))}</strong><br></br>
 
 
@@ -99,15 +110,17 @@ export function DetallesPeliculas() {
 
                 </p>
                 <div className="About me">
-				<a href="www.fb.com" title="Facebook">
-                <img src="https://www.google.com/search?q=fb+icon&source=lnms&tbm=isch&sa=X&ved=2ahUKEwirz-it1K78AhV8M0QIHcfIBFcQ_AUoAXoECAEQAw&biw=1536&bih=758&dpr=1.25#imgrc=0UwYLl9YdLXjjM" alt="facebook" />
-                <i>Facebook</i>
-				</a>
-				<a href="www.fb.com" title="Facebook">
-                <img  alt="facebook" />
-                <i >Facebook2</i>
+				&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.facebook.com/javier.perezsalas.7" title="Facebook">
+                <img src="../facebook.png" alt="facebook" /> 
+                
+				</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<a href="https://www.facebook.com/javier.perezsalas.7" title="Facebook">
+                <img src="../facebook.png" alt="facebook" />
+                
 
-				</a>
+				</a><br></br>
+                <i>Facebook</i>&nbsp;&nbsp;
+                <i >Facebook2</i>
 			    </div>
             </div>
         </div>

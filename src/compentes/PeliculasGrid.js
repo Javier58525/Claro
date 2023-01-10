@@ -2,6 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { PeliculaCard } from "./PeliculaCard";
 import styles from "./MoviesGrid.module.css";
 import { useSearchParams} from "react-router-dom";
+import { useDispatch, useSelector } from 'react-redux';
+import { getTitleListAction } from '../Redux/Peliculas';
+
 
 
 export function PeliculasGrid(id) {
@@ -9,12 +12,20 @@ export function PeliculasGrid(id) {
   const [infoPeliculas, setInfoPeliculas] = useState([]);
   const [searchParams] = useSearchParams();
   console.log(searchParams.get('busqueda'));
-  
+  const dispatch= useDispatch();
+  const peliculasLista=useSelector( (store)=>store.titleList.list );
+
+  console.log(peliculasLista);
+
+
+
+
 
   useEffect(() => {
-    cargarPeliculas(id);
+    //cargarPeliculas(id);
+    dispatch(getTitleListAction());
 
-  }, [id.id]);
+  }, [id.id, dispatch]);
 
 
 
@@ -61,9 +72,9 @@ export function PeliculasGrid(id) {
     <ul className={styles.moviesGrid}>
 
       
-      { !searchParams.get('busqueda') && infoPeliculas.map(({id,nombre,imagen,description,year}) => (
+      { !searchParams.get('busqueda') && peliculasLista.map(({id,title,url_imagen_t1,description,year}) => (
         
-        <PeliculaCard key={id} id={id} nombre={nombre} imagen={imagen} description={description} year={year}/>
+        <PeliculaCard key={id} id={id} nombre={title} imagen={url_imagen_t1} description={description} year={year}/>
 
 
       ))} 
@@ -71,9 +82,9 @@ export function PeliculasGrid(id) {
       {
         searchParams.get('busqueda') &&
         
-          infoPeliculas.filter(peliculas => peliculas.nombre.toLowerCase().includes(searchParams.get('busqueda'))).map(({id,nombre,imagen,description,year}) =>(
+          peliculasLista.filter(peliculas => peliculas.nombre.toLowerCase().includes(searchParams.get('busqueda'))).map(({id,title,url_imagen_t1,description,year}) =>(
           
-          <PeliculaCard key={id} id={id} nombre={nombre} imagen={imagen} description={description} year={year}/>
+          <PeliculaCard key={id} id={id} nombre={title} imagen={url_imagen_t1} description={description} year={year}/>
           )
         )
         

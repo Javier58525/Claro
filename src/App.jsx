@@ -1,11 +1,16 @@
 import {BrowserRouter as Router,Routes,Route,Link,Navigate,} from "react-router-dom";
 import { DetallesPeliculas } from "./compentes/DetallesPeliculas";
 import { PaginaInicio } from "./compentes/PaginaInicio";
-
 import  styles from "./App.module.css";
+import { Provider } from "react-redux";
+import generateStore from "./Redux/store";
+
 
 export function App() {
+  const store= generateStore();
   return (
+    <Provider store={store}>     
+
     <Router>
       <header>
           <h2 >        
@@ -55,5 +60,7 @@ export function App() {
         </Routes>
       </main>
     </Router>
+    </Provider>  
+
   );
 }
