@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useParams } from "react-router";
 import styles from "./PeliculaCard.module.css";
 import { useDispatch, useSelector } from 'react-redux';
@@ -12,12 +12,6 @@ export function DetallesPeliculas() {
     const detalles = useSelector( (store)=>store.titleDetail.detail);
 
 
-    console.log("Detalles Peliculas Redux", detalles);
-
-
-    console.log(id.Id);
-
-    console.log(styles);
 
     useEffect(() => {
         //cargarPeliculas();
@@ -58,9 +52,6 @@ export function DetallesPeliculas() {
         backgroundPosition: "center",
     }
 
-    console.log("subbed", detalles.subbed);
-    console.log("dubbed", detalles.dubbed);
-
     const isSubbed = "subbed" in detalles && (detalles.subbed === "true" || detalles.subbed === true) ? true : false;
     const isDubbed = "dubbed" in detalles && (detalles.dubbed === "true" || detalles.dubbed === true) ? true : false;
 
@@ -76,7 +67,7 @@ export function DetallesPeliculas() {
                     <strong>Title:</strong> {detalles.title}
                 </p>
                 <p>
-                    año{detalles.extendedcommon.media.publishyear}&nbsp;&nbsp;{detalles.duration}
+                    {detalles.publishyear}&nbsp;&nbsp;{detalles.duration}
                     <strong className={styles.blanco}>{detalles.code}</strong>
                     {
                         isSubbed && 
@@ -110,17 +101,18 @@ export function DetallesPeliculas() {
 
                 </p>
                 <div className="About me">
-				&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.facebook.com/javier.perezsalas.7" title="Facebook">
+				&nbsp;<a href="https://www.facebook.com/javier.perezsalas.7" title="Facebook">
                 <img src="../facebook.png" alt="facebook" /> 
+                <i>Facebook</i>&nbsp;&nbsp;
+
                 
-				</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				<a href="https://www.facebook.com/javier.perezsalas.7" title="Facebook">
-                <img src="../facebook.png" alt="facebook" />
+				</a> 
+				&nbsp;<a href="https://www.facebook.com/javier.perezsalas.7" title="Facebook">
+                <img src="../mail2.png" alt="facebook" />
                 
 
-				</a><br></br>
-                <i>Facebook</i>&nbsp;&nbsp;
-                <i >Facebook2</i>
+				</a>
+                <i >E-mail</i>
 			    </div>
             </div>
         </div>

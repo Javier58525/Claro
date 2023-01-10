@@ -28,22 +28,23 @@ export default function detallesPeliculasReducer(state = inialState, action) {
 }
 
 export const getTitleDetailAction = (id) => async (dispatch) => {
-	console.log("Detalles Redux",id);
 	try {
 		
 		const url = `https://mfwkweb-api.clarovideo.net/services/content/data?device_id=web&device_category=web&device_model=web&device_type=web&device_so=Chrome&format=json&device_manufacturer=generic&authpn=webclient&authpt=tfg1h3j4k6fd7&api_version=v5.93&region=mexico&HKS=rrscut2td9j0v73m68jrf3k665&group_id=`+id;
 
 		const datos= await fetch(url);
 		const res2= await datos.json();
+
+		const { group: { common: { image_background, image_medium, title, large_description, extendedcommon: { media: { publishyear, duration } },
+            extendedcommon: { media: { rating: { desc, code } } }, extendedcommon: { media: { language: { dubbed, subbed } } }, extendedcommon: { genres: { genre } }, extendedcommon: { roles: { role } } } } } = res2.response;
+
 		
-		console.log("Json Redux", res2);
 
 		dispatch({
 			type: GET_TITLE_DETAIL_SUCCESS,
-			payload: res2.response.group.common,
+			payload: {image_background,image_medium,title,large_description,publishyear,duration,desc,code,dubbed,subbed,genre,role},
 		});
 	} catch (error) {
-		console.log(error);
 		dispatch({
 			type: GET_TITLE_DETAIL_FAILURE,
 		});

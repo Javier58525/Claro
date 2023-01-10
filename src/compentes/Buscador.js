@@ -9,14 +9,12 @@ export function Buscador(){
 
     const Buscar = (e) =>{
         e.preventDefault();
-        //console.log(buscador)
         busqueda("/?busqueda=" + buscador)
 
     }
 
     const Buscar2 = (e) =>{
         setBuscador(e.target.value)
-        console.log("Hola"+ buscador)
         busqueda("/?busqueda=" + buscador)
 
 
